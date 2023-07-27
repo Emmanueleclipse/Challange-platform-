@@ -1,0 +1,39 @@
+name: QA - Heroku Deploy
+
+on:
+   # Job Trigger automatically if any code push/PR to QA branch
+   push:
+    branches:
+      - QA
+   # Enabled Manual Trigger
+   workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Setup Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          
+      - name: Install Dependency 
+        run: npm i
+        
+#       - name: Test 
+#         run: npm test
+
+      - name: Build Application
+        run: npm run build
+      
+      - name: Deploy App -> QA
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "challenge-goal-stage"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          branch: QA
+      
