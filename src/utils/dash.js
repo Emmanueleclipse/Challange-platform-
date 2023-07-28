@@ -3,8 +3,8 @@ const CryptoJS = require('crypto-js')
 import jwt_decode from 'jwt-decode'
 
 export const adminMnemonic =
-  'garden worry either voyage muffin arrest donate unable pumpkin book thing faculty'
-export const adminrecipientAddress = 'yS2izkG4dVHNd9LZpPxWZG11zcpMd76mxX'
+  'acid project erosion inside student fashion scrap list sock mouse oblige ivory'
+export const adminrecipientAddress = 'ycbAY5t1NkCTrkSfhM27nYRqSEvnuZSWh5'
 export const secretKey = 'goalPlatform22'
 
 export async function getDashAccount() {

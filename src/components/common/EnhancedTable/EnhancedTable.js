@@ -207,14 +207,16 @@ export default function EnhancedTable(props) {
                           style={{
                             backgroundColor:
                               new Date() >= new Date(row.start_date) &&
-                              new Date() < new Date(row.end_date)
+                              new Date() < new Date(row.end_date) &&
+                              !row?.fund_delivered_flag
                                 ? '#2E7D32'
                                 : '#f50057',
                             color: '#fff',
                           }}
                           label={
                             new Date() >= new Date(row.start_date) &&
-                            new Date() < new Date(row.end_date)
+                            new Date() < new Date(row.end_date) &&
+                            !row?.fund_delivered_flag
                               ? 'In Progress'
                               : 'Ended'
                           }
