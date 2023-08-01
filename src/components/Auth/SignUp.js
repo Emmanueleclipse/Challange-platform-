@@ -64,11 +64,11 @@ const SignUp = () => {
         setAccountInfo(account)
         const {
           mnemonic,
-          balance: { confirmed: balance },
+          // balance: { confirmed: balance },
         } = account
-        if (balance === 0) {
-          toast.warn(`Please charge your account`)
-        }
+        // if (balance === 0) {
+        //   toast.warn(`Please charge your account`)
+        // }
         setCopyMnemonic(mnemonic)
         setAccountCreated(true)
       })
@@ -105,8 +105,8 @@ const SignUp = () => {
           private_key: mnemonic,
         },
         {
-          onError: (error) => {
-            toast.error(error.toString())
+          onError: () => {
+            toast.error('Username already taken.')
           },
           onSuccess: () => {
             setShowModal(true)
@@ -127,13 +127,16 @@ const SignUp = () => {
       {showModal ? (
         <Modal closeCall={true}>
           <div>
-            <h1 style={{ fontWeight: 'bold' }}>Back up mnemonic phrase </h1>
+            <h1 className={styles.title} style={{ fontWeight: 'bold' }}>
+              Back up mnemonic phrase{' '}
+            </h1>
             <hr style={{ marginTop: '0.75rem', marginBottom: '0.75rem' }} />
-            <p>
+            <p className={styles.textInput}>
               Write down or copy these words in the right order and keep them in
               a safe place. You are advised to write them down
             </p>
             <p
+              className={styles.title}
               style={{
                 marginTop: '0.75rem',
                 fontWeight: 'bold',
@@ -141,6 +144,7 @@ const SignUp = () => {
               }}
             >{`"${copyMnemonic}"`}</p>
             <button
+              className={styles.title}
               type='submit'
               style={{
                 fontWeight: 'bold',
@@ -151,6 +155,7 @@ const SignUp = () => {
                 paddingRight: '1rem',
                 borderRadius: '0.25rem',
                 width: '100%',
+                font: styles.textInput,
                 backgroundColor: 'blue',
                 color: 'white',
                 hoverBackgroundColor: 'white',
@@ -182,7 +187,9 @@ const SignUp = () => {
             ) : (
               <>
                 <Typography>Your Dash Address is</Typography>
-                <div className={styles.dashAddress}>{accountInfo?.address}</div>
+                <div className={styles.dashAddress}>
+                  "{accountInfo?.address}"
+                </div>
                 <TextField
                   className={styles.textInput}
                   variant='outlined'

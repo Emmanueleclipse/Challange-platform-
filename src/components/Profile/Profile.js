@@ -149,7 +149,7 @@ const Profile = () => {
                 )}
               </Grid>
               <Typography>Your Dash Address is</Typography>
-              <div className={styles.dashAddress}>{accountInfo.address}</div>
+              <div className={styles.dashAddress}>"{accountInfo.address}"</div>
               <Grid item>
                 <TextField
                   className={styles.textInput}

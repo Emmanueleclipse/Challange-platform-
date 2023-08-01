@@ -505,19 +505,19 @@ const EditChallenge = () => {
                         </Grid>
                       )}
                       {/* {values.status === 'private' && ( */}
-                      <Grid
+                      {/* <Grid
                         item
                         container
                         direction='row'
                         alignItems='center'
                         spacing={2}
-                      >
-                        <Grid item xs={12} sm={3}>
+                      > */}
+                      {/* <Grid item xs={12} sm={3}>
                           <Typography className={styles.label}>
                             Recipient Dash Address
                           </Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={9}>
+                        </Grid> */}
+                      {/* <Grid item xs={12} sm={9}>
                           <TextField
                             className={styles.textInput}
                             label='Recipient Dash Address'
@@ -535,8 +535,8 @@ const EditChallenge = () => {
                             onChange={handleChange}
                             fullWidth
                           />
-                        </Grid>
-                      </Grid>
+                        </Grid> */}
+                      {/* </Grid> */}
                       {/* )} */}
                       <Grid
                         item
