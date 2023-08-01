@@ -3,8 +3,8 @@ const CryptoJS = require('crypto-js')
 import jwt_decode from 'jwt-decode'
 
 export const adminMnemonic =
-  'acid project erosion inside student fashion scrap list sock mouse oblige ivory'
-export const adminrecipientAddress = 'ycbAY5t1NkCTrkSfhM27nYRqSEvnuZSWh5'
+  'eight chapter insect exchange virtual now room artefact end display item shrug'
+export const adminrecipientAddress = 'yRa4AHcKvay2RgTkWNe5GnLYfdFUH5tT9W'
 export const secretKey = 'goalPlatform22'
 
 export async function getDashAccount() {
@@ -90,7 +90,6 @@ export async function getMyFunds(mnemonic) {
   const client = new Client(clientOpts)
   const account = await client.wallet.getAccount()
   const totalBalance = await account.getTotalBalance()
-  console.log(totalBalance)
   client.disconnect()
   return totalBalance
 }
@@ -108,36 +107,28 @@ export async function sendFundsToChallengeWinners(element) {
 
   const client = new Client(clientOpts)
   const account = await client.wallet.getAccount()
+  const totalBalance = await account.getTotalBalance()
   const utxos = await account.getUTXOS()
-
-  try {
-    // Calculate the total amount needed for all payments
-
-    // Check if the wallet balance is sufficient for all payments
-    const balance = await account.getTotalBalance()
-    if (balance < element?.amount * 100000000 || !utxos?.length) {
+  const sendFunds = async () => {
+    if (totalBalance < element?.amount * 100000000 || !utxos?.length)
       return 'Charge your account!'
-    }
-
-    // Create a transaction for each user
-    const transaction = account.createTransaction({
-      recipient: element?.identity,
-      satoshis: element?.amount * 100000000,
-    })
-
-    try {
-      const transactionId = await account.broadcastTransaction(transaction)
-
+    else {
+      const transaction = account.createTransaction({
+        recipient: adminrecipientAddress, // Testnet2 faucet
+        satoshis: element?.amount * 100000000, // Convert the amount to satoshis
+      })
       return {
-        transactionId,
+        transactionId: await account.broadcastTransaction(transaction),
         challengeId: element?.challenge_id,
       }
-    } catch (error) {
-      console.error('Error broadcasting transaction:', error)
-      throw error // Rethrow the error if needed
     }
+  }
+
+  try {
+    const result = await sendFunds() // Wait for the result of the transaction broadcast
+    return result // Return the transaction broadcast result
   } catch (error) {
-    console.error('Something went wrong:', error)
+    console.error('Something went wrong:\n', error)
     throw error // Rethrow the error in case the caller wants to handle it
   } finally {
     client.disconnect() // Disconnect the client after sending the funds

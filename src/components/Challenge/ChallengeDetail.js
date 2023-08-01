@@ -72,7 +72,10 @@ export default function ChallengeDetail() {
 
   const [betAmount, setBetAmount] = useState(challenge?.add_bet) // Initialize betAmount with the initial minBet value
 
-  let results = []
+  const [results, setResults] = useState([])
+
+  const [loadingFunds, setLoadingFunds] = useState(false)
+
   useFetchUser()
 
   useEffect(() => {
@@ -136,6 +139,30 @@ export default function ChallengeDetail() {
     return () => clearInterval(timerId)
   }, [challenge])
 
+  useEffect(() => {
+    if (results?.length && !loadingFunds)
+      results.forEach((element) => {
+        if (element?.transactionId && element?.challengeId)
+          mutateFilterPaidChallenges(
+            { id: element?.challengeId },
+            {
+              onSuccess: ({ data }) => {
+                console.log(data)
+                if (data) {
+                  toast.success('Payment has been succesfully made.', {
+                    autoClose: false,
+                  })
+                  reload()
+                }
+              },
+              onError: () => {
+                toast.error(`Unexceptional Error`)
+              },
+            }
+          )
+      })
+  }, [results, loadingFunds, mutateFilterPaidChallenges, reload])
+
   // const joinAvailability = useMemo(
   //   () =>
   //     !status === STATUS_STARTED ||
@@ -163,19 +190,26 @@ export default function ChallengeDetail() {
     jwtDecode(localStorage.getItem('token')).then((res) => {
       const pKey = res?.private_key
       decryptMnemonic(pKey, secretKey).then((res) => {
-        console.log(res)
         if (res)
           toast.success(
-            'Please keep patience while your transaction is being processing'
+            'Please keep patience while your transaction is being processing',
+            {
+              autoClose: false,
+            }
           )
         sendFundsToEscrow(res, betAmount).then((res1) => {
           if (res1 === 'Charge your account!') {
             toast.error(
-              'You do not have enough funds to perform this transaction'
+              'You do not have enough funds to perform this transaction',
+              {
+                autoClose: false,
+              }
             )
             setLoading(false)
           } else {
-            toast.success('Amount Successfully Transfered')
+            toast.success('Amount Successfully Transfered', {
+              autoClose: false,
+            })
             mutateJoinChallenge(
               {
                 data: {
@@ -265,7 +299,10 @@ export default function ChallengeDetail() {
   const handlePayouts = useCallback(() => {
     setLoading(true)
     toast.success(
-      'Please wait while the funds are being transferring to the winners of this challenge. It takes upto 2-3 minutes approx'
+      'Please wait while the funds are being transferring to the winners of this challenge. It takes upto 2-3 minutes approx',
+      {
+        autoClose: false,
+      }
     )
     mutateGetAChallengeWinner(
       {
@@ -273,35 +310,19 @@ export default function ChallengeDetail() {
       },
       {
         onSuccess: async ({ data }) => {
-          if (data?.data && data?.data?.length)
-            for (const element of data?.data || []) {
-              try {
-                const res = await sendFundsToChallengeWinners(element)
-                console.log(res)
-                results.push(res)
-              } catch (error) {
-                console.error('Error processing challenge:', error)
-              }
-            }
+          setLoadingFunds(true)
+          if (data?.data && data?.data?.length) {
+            // Create an array of promises for each async call
+            const promises = data?.data?.map((element) =>
+              sendFundsToChallengeWinners(element)
+            )
 
-          console.log(results)
-          results.forEach((element) => {
-            if (element?.transactionId && element?.challengeId)
-              mutateFilterPaidChallenges(
-                { id: element?.challengeId },
-                {
-                  onSuccess: ({ data }) => {
-                    if (data) {
-                      toast.success('Payment has been succesfully made.')
-                      reload()
-                    }
-                  },
-                  onError: () => {
-                    toast.error(`Unexceptional Error`)
-                  },
-                }
-              )
-          })
+            // Wait for all the async calls to complete
+            const results = await Promise.all(promises)
+            // Update the state with the results
+            setResults(results)
+          }
+          setLoadingFunds(false)
         },
         onError: () => {
           toast.error(`Unexceptional Error`)
@@ -589,6 +610,8 @@ export default function ChallengeDetail() {
     classes.container,
     currentUser,
     handleAgree,
+    results,
+    loadingFunds,
     handleBet,
     handleJoin,
     handleSubmit,
