@@ -555,21 +555,6 @@ export default function ChallengeDetail() {
                                     </Field>
                                     <Box mb={3} />
                                   </Grid>
-                                  <Button
-                                    variant='contained'
-                                    color='primary'
-                                    fullWidth
-                                    disabled={
-                                      Boolean(errors.minBet) ||
-                                      challenge?.participant?.includes(
-                                        currentUser?.identity
-                                      )
-                                    }
-                                    size='large'
-                                    onClick={handleJoin}
-                                  >
-                                    Join
-                                  </Button>
 
                                   <Button
                                     variant='contained'

@@ -25,12 +25,19 @@ import { useMutation } from 'react-query'
 import {
   createChallenge,
   getChallenge,
+  joinChallenge,
   updateChallenge,
 } from 'services/challenge'
 import { toast } from 'react-toastify'
 import { useAppState } from '../../context/stateContext'
 import { convertDateToUTCString } from 'utils/date'
-import { createDashEscrow } from 'utils/dash'
+import {
+  createDashEscrow,
+  decryptMnemonic,
+  jwtDecode,
+  secretKey,
+  sendFundsToEscrow,
+} from 'utils/dash'
 
 export const CREATE_MODE = 0
 export const EDIT_MODE = 1
@@ -81,6 +88,7 @@ const EditChallenge = () => {
   const { mutate: mutateGetChallenge } = useMutation(getChallenge)
   const { mutate: mutateCreateChallenge } = useMutation(createChallenge)
   const { mutate: mutateUpdateChallenge } = useMutation(updateChallenge)
+  const { mutate: mutateJoinChallenge } = useMutation(joinChallenge)
 
   const { currentUser, useFetchUser } = useAppState()
   const [mode, setMode] = useState()
@@ -111,7 +119,6 @@ const EditChallenge = () => {
   const handleSubmit = useCallback(
     (values) => {
       setDisable(true)
-      console.log(mode)
       if (mode === CREATE_MODE) {
         createDashEscrow()
           .then((dataEscrow) => {
@@ -126,17 +133,76 @@ const EditChallenge = () => {
               goal_increaments: `${values.goal_increaments}`,
               add_bet: `${values.add_bet}`,
             }
+
             if (mode === CREATE_MODE) {
-              mutateCreateChallenge(data, {
-                onSuccess: () => {
-                  setDisable(false)
-                  history.push('/challenges')
-                },
-                onError: () => {
-                  setDisable(false)
-                  toast.error(`Can't create a challenge.`)
-                },
-              })
+              if (!values?.creator)
+                mutateCreateChallenge(data, {
+                  onSuccess: () => {
+                    setDisable(false)
+                    history.push('/challenges')
+                  },
+                  onError: () => {
+                    setDisable(false)
+                    toast.error(`Can't create a challenge.`)
+                  },
+                })
+              else {
+                jwtDecode(localStorage.getItem('token')).then((res) => {
+                  const pKey = res?.private_key
+                  decryptMnemonic(pKey, secretKey).then((res) => {
+                    if (res)
+                      toast.success(
+                        'Please keep patience while your transaction is being processing',
+                        {
+                          autoClose: false,
+                        }
+                      )
+                    sendFundsToEscrow(res, values?.add_bet).then((res1) => {
+                      if (res1 === 'Charge your account!') {
+                        toast.error(
+                          'You do not have enough funds to perform this transaction',
+                          {
+                            autoClose: false,
+                          }
+                        )
+                        setLoading(false)
+                        setDisable(false)
+                      } else {
+                        toast.success('Amount Successfully Transfered', {
+                          autoClose: false,
+                        })
+
+                        mutateCreateChallenge(data, {
+                          onSuccess: (data) => {
+                            mutateJoinChallenge(
+                              {
+                                data: {
+                                  username: currentUser?.username,
+                                  bet: parseFloat(values?.add_bet),
+                                  challenge_id: data?.data?.id,
+                                },
+                              },
+                              {
+                                onSuccess: () => {
+                                  setLoading(false)
+                                  history.push('/challenges')
+                                },
+                                onError: () => {
+                                  toast.error(`Can't join the challenge.`)
+                                },
+                              }
+                            )
+                          },
+                          onError: () => {
+                            setDisable(false)
+                            toast.error(`Can't create a challenge.`)
+                          },
+                        })
+                      }
+                    })
+                  })
+                })
+              }
             } else {
               mutateUpdateChallenge(
                 { id, data },
@@ -393,6 +459,21 @@ const EditChallenge = () => {
                             error={Boolean(touched.add_bet && errors.add_bet)}
                             helperText={touched.add_bet && errors.add_bet}
                             value={values.add_bet}
+                            onChange={handleChange}
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                          <Typography className={styles.label}>
+                            Join Challenge:
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={9}>
+                          <Checkbox
+                            label='Join Challenge'
+                            name='creator'
+                            error={Boolean(touched.visible && errors.visible)}
+                            helperText={touched.visible && errors.visible}
+                            value={values.visible}
                             onChange={handleChange}
                           />
                         </Grid>
