@@ -206,17 +206,21 @@ export default function EnhancedTable(props) {
                         <Chip
                           style={{
                             backgroundColor:
-                              new Date() >= new Date(row.start_date) &&
-                              new Date() < new Date(row.end_date) &&
-                              !row?.fund_delivered_flag
+                              new Date() <= new Date(row.start_date)
+                                ? '#3280F6'
+                                : new Date() >= new Date(row.start_date) &&
+                                  new Date() < new Date(row.end_date) &&
+                                  !row?.fund_delivered_flag
                                 ? '#2E7D32'
                                 : '#f50057',
                             color: '#fff',
                           }}
                           label={
-                            new Date() >= new Date(row.start_date) &&
-                            new Date() < new Date(row.end_date) &&
-                            !row?.fund_delivered_flag
+                            new Date() <= new Date(row.start_date)
+                              ? 'Upcoming'
+                              : new Date() >= new Date(row.start_date) &&
+                                new Date() < new Date(row.end_date) &&
+                                !row?.fund_delivered_flag
                               ? 'In Progress'
                               : 'Ended'
                           }
