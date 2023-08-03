@@ -50,6 +50,7 @@ export async function sendFundsToEscrow(mnemonic, betAmount) {
   }
 
   const client = new Client(clientOpts)
+  
   const account = await client.wallet.getAccount()
   const totalBalance = await account.getTotalBalance()
   const utxos = await account.getUTXOS()
