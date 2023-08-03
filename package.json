@@ -49,7 +49,8 @@
     "build-windows": "set NODE_ENV=production webpack --config config/webpack.prod.js",
     "build-staging": "NODE_ENV=production webpack --config config/webpack.stag.js",
     "prettify": "yarn prettier \"**/*.*(js|jsx)\" --ignore-path=.prettierignore --write",
-    "predeploy": "yarn heroku prune && npm run build",
+    "predeploy": "npm run build",
+    "heroku-prebuild": "yarn cache clean",
     "deploy": "gh-pages -d dist"
   },
   "jest": {
