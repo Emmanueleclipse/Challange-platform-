@@ -50,7 +50,6 @@
     "build-staging": "NODE_ENV=production webpack --config config/webpack.stag.js",
     "prettify": "yarn prettier \"**/*.*(js|jsx)\" --ignore-path=.prettierignore --write",
     "predeploy": "npm run build",
-    "heroku-prebuild": "yarn install",
     "deploy": "gh-pages -d dist"
   },
   "jest": {
