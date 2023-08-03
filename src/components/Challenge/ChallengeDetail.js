@@ -405,7 +405,7 @@ export default function ChallengeDetail() {
                 }}
               </Formik>
             </Box>
-            <Box display='flex' alignItems='center' flexDirection='column'>
+            <Box display='flex' alignItems='start' flexDirection='column'>
               <>
                 <Typography variant='h3'>
                   <strong>{challenge?.name}</strong>
@@ -460,7 +460,7 @@ export default function ChallengeDetail() {
                         <Form autoComplete='off'>
                           <Grid
                             container
-                            justifyContent='center'
+                            justifyContent='start'
                             display='flex'
                             spacing={2}
                           >
