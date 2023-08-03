@@ -25,7 +25,7 @@ const PageWrapper = (props) => {
   return (
     <Paper className={classes.wrapper}>
       <Box className={classes.header}>
-        <Typography variant='h5'>
+        <Typography style={{ fontSize: 20 }}>
           <strong>{title}</strong>
         </Typography>
       </Box>

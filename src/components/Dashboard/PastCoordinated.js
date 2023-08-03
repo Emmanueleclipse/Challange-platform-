@@ -74,18 +74,20 @@ export default function PastCoordinated(props) {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} container spacing={2} direction='column'>
           <Grid item>
-            <Typography variant='h5'>Total Participants:</Typography>
+            <Typography style={{ fontSize: 14 }}>
+              Total Participants:
+            </Typography>
           </Grid>
           <Grid item>
-            <Typography variant='h4'>
+            <Typography style={{ fontSize: 14 }}>
               <strong>{totalParticipants}</strong>
             </Typography>
           </Grid>
           <Grid item>
-            <Typography variant='h5'>Success Rate:</Typography>
+            <Typography style={{ fontSize: 14 }}>Success Rate:</Typography>
           </Grid>
           <Grid item>
-            <Typography variant='h4'>
+            <Typography style={{ fontSize: 14 }}>
               <strong>{successRate}%</strong>
             </Typography>
           </Grid>
@@ -96,8 +98,12 @@ export default function PastCoordinated(props) {
               <ListItem button key={`challenge-${index}`}>
                 {item.success ? (
                   <>
-                    <ListItemText primary={item.name} />
+                    <ListItemText
+                      style={{ fontSize: 14 }}
+                      primary={item.name}
+                    />
                     <Chip
+                      style={{ fontSize: 14 }}
                       label='Succeed'
                       color='primary'
                       className={classes.chip}

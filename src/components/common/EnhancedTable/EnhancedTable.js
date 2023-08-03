@@ -195,7 +195,10 @@ export default function EnhancedTable(props) {
                       </TableCell>
                       <TableCell align='center'>
                         <Chip
-                          label={row.status}
+                          label={
+                            row.status?.charAt(0)?.toUpperCase() +
+                            row.status?.slice(1)
+                          }
                           color={
                             row.status === 'open' ? 'primary' : 'secondary'
                           }

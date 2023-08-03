@@ -47,6 +47,7 @@ const Profile = () => {
   const { currentUser, useFetchUser } = useAppState()
   const [user, setUser] = useState({})
   const [loading, setLoading] = useState(true)
+  const [loadBalance, setLoadBalance] = useState(false)
   const [accountInfo, setAccountInfo] = React.useState({})
   const [imageUrl, setImageUrl] = useState(null)
   useFetchUser()
@@ -80,14 +81,18 @@ const Profile = () => {
   }, [mutateUpdateUser, user])
 
   function getFunds() {
-    toast.success('Please keep patience while you balance is loading...')
+    toast.success('Please keep patience while you balance is loading...', {
+      autoClose: 7000,
+    })
     jwtDecode(localStorage.getItem('token')).then((res) => {
+      setLoadBalance(true)
       const pKey = res?.private_key
       decryptMnemonic(pKey, secretKey).then((res) => {
         if (res)
           getMyFunds(res).then((res) => {
             if (res) {
               setUser({ ...user, balance: (res / 100000000).toFixed(3) })
+              setLoadBalance(false)
             }
           })
       })
@@ -198,14 +203,18 @@ const Profile = () => {
                 </Button>
               </Grid>
               <Grid>
-                <Button
-                  color='primary'
-                  variant='contained'
-                  className={styles.button}
-                  onClick={() => getFunds()}
-                >
-                  Get Balance
-                </Button>
+                {loadBalance ? (
+                  <CircularProgress />
+                ) : (
+                  <Button
+                    color='primary'
+                    variant='contained'
+                    className={styles.button}
+                    onClick={() => getFunds()}
+                  >
+                    Get Balance
+                  </Button>
+                )}
               </Grid>
             </Grid>
           )}

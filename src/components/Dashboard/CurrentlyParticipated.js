@@ -100,10 +100,10 @@ export default function CurrentlyParticipated(props) {
       <Box>
         <Grid container spacing={4} direction='column'>
           <Grid item>
-            <Typography variant='h5'>Goal Metric Total:</Typography>
+            <Typography style={{ fontSize: 14 }}>Goal Metric Total:</Typography>
           </Grid>
           <Grid item>
-            <Typography variant='h4'>
+            <Typography style={{ fontSize: 14 }}>
               <strong>{totalGoal}</strong>
             </Typography>
           </Grid>

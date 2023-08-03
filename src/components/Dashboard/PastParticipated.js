@@ -49,10 +49,10 @@ export default function PastParticipated(props) {
         {/* Add alignItems prop */}
         <Grid item xs={12} sm={6} container spacing={4} direction='column'>
           <Grid item>
-            <Typography variant='h5'>Goal Metric Total:</Typography>
+            <Typography style={{ fontSize: 14 }}>Goal Metric Total:</Typography>
           </Grid>
           <Grid item>
-            <Typography variant='h4'  >
+            <Typography style={{ fontSize: 14 }}>
               <strong>{totalGoal}</strong>
             </Typography>
           </Grid>

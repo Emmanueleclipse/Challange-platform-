@@ -127,14 +127,19 @@ const SignUp = () => {
       {showModal ? (
         <Modal closeCall={true}>
           <div>
-            <h1 className={styles.title} style={{ fontWeight: 'bold' }}>
+            <Typography
+              className={styles.title}
+              style={{ fontSize: 20 }}
+              align='center'
+            >
               Back up mnemonic phrase{' '}
-            </h1>
+            </Typography>
             <hr style={{ marginTop: '0.75rem', marginBottom: '0.75rem' }} />
-            <p className={styles.textInput}>
+            <Typography style={{ fontSize: 14 }}>
               Write down or copy these words in the right order and keep them in
               a safe place. You are advised to write them down
-            </p>
+            </Typography>
+
             <p
               className={styles.title}
               style={{
@@ -142,7 +147,9 @@ const SignUp = () => {
                 fontWeight: 'bold',
                 color: 'blue',
               }}
-            >{`"${copyMnemonic}"`}</p>
+            ></p>
+            <div className={styles.dashAddress}>{`"${copyMnemonic}"`}</div>
+
             <button
               className={styles.title}
               type='submit'

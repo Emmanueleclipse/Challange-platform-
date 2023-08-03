@@ -280,7 +280,7 @@ const EditChallenge = () => {
                 return (
                   <Form autoComplete='off'>
                     <Grid container direction='column' spacing={2}>
-                      <Grid
+                      {/* <Grid
                         item
                         container
                         direction='row'
@@ -298,7 +298,7 @@ const EditChallenge = () => {
                             <input type='file' hidden />
                           </Button>
                         </Grid>
-                      </Grid>
+                      </Grid> */}
                       <Grid
                         item
                         container
