@@ -3,8 +3,8 @@ const CryptoJS = require('crypto-js')
 import jwt_decode from 'jwt-decode'
 
 export const adminMnemonic =
-  'eight chapter insect exchange virtual now room artefact end display item shrug'
-export const adminrecipientAddress = 'yRa4AHcKvay2RgTkWNe5GnLYfdFUH5tT9W'
+  'escape skate list comfort time flip join hurt olive witness resource casual'
+export const adminrecipientAddress = 'yhyKCM69en4CFuMaxtrWqFq5xEnnpWhBFX'
 export const secretKey = 'goalPlatform22'
 
 export async function getDashAccount() {
@@ -116,7 +116,7 @@ export async function sendFundsToChallengeWinners(element) {
       return 'Charge your account!'
     else {
       const transaction = account.createTransaction({
-        recipient: adminrecipientAddress, // Testnet2 faucet
+        recipient: element?.identity, // Testnet2 faucet
         satoshis: element?.amount.toFixed(4) * 100000000, // Convert the amount to satoshis
       })
       return {
