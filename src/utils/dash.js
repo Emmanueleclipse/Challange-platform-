@@ -116,7 +116,7 @@ export async function sendFundsToChallengeWinners(element) {
     else {
       const transaction = account.createTransaction({
         recipient: adminrecipientAddress, // Testnet2 faucet
-        satoshis: element?.amount * 100000000, // Convert the amount to satoshis
+        satoshis: element?.amount.toFixed(4) * 100000000, // Convert the amount to satoshis
       })
       return {
         transactionId: await account.broadcastTransaction(transaction),
