@@ -130,7 +130,7 @@ const SignUp = () => {
             <Typography
               className={styles.title}
               style={{ fontSize: 20 }}
-              align='center'
+              align='start'
             >
               Back up mnemonic phrase{' '}
             </Typography>
@@ -140,47 +140,23 @@ const SignUp = () => {
               a safe place. You are advised to write them down
             </Typography>
 
-            <p
-              className={styles.title}
-              style={{
-                marginTop: '0.75rem',
-                fontWeight: 'bold',
-                color: 'blue',
-              }}
-            ></p>
-            <div className={styles.dashAddress}>{`"${copyMnemonic}"`}</div>
+            <Typography
+              style={{ fontSize: 14 }}
+              className={styles.dashAddress}
+            >{`"${copyMnemonic}"`}</Typography>
 
-            <button
-              className={styles.title}
-              type='submit'
-              style={{
-                fontWeight: 'bold',
-                marginTop: '1rem',
-                paddingTop: '0.5rem',
-                paddingBottom: '0.5rem',
-                paddingLeft: '1rem',
-                paddingRight: '1rem',
-                borderRadius: '0.25rem',
-                width: '100%',
-                font: styles.textInput,
-                backgroundColor: 'blue',
-                color: 'white',
-                hoverBackgroundColor: 'white',
-                hoverColor: 'white',
-                hoverBoxShadow:
-                  '0 0 0 3px rgba(59, 130, 246, 0.5), 0 0 0 5px rgba(59, 130, 246, 0.3)',
-                focusOutline: 'none',
-                focusBackgroundColor: 'primary',
-                focusBoxShadow:
-                  '0 0 0 3px rgba(59, 130, 246, 0.5), 0 0 0 5px rgba(59, 130, 246, 0.3)',
-              }}
+            <Button
+              disabled={isCreateDisabled}
+              className={styles.unlockButton}
+              color='primary'
+              variant='contained'
               onClick={() => {
                 navigator.clipboard.writeText(copyMnemonic)
                 history.push(Routes.Login.path)
               }}
             >
               Copy
-            </button>
+            </Button>
           </div>
         </Modal>
       ) : (

@@ -91,7 +91,12 @@ const Profile = () => {
         if (res)
           getMyFunds(res).then((res) => {
             if (res) {
-              setUser({ ...user, balance: (res / 100000000).toFixed(3) })
+              const balanceInDash = (res / 100000000).toFixed(3)
+              setUser({ ...user, balance: balanceInDash })
+              setLoadBalance(false)
+            } else {
+              // If the balance is 0, handle it accordingly
+              setUser({ ...user, balance: '0.000' }) // Assuming you want to set the balance to '0.000' in this case
               setLoadBalance(false)
             }
           })

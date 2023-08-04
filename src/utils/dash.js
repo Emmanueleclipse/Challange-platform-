@@ -92,7 +92,8 @@ export async function getMyFunds(mnemonic) {
   const account = await client.wallet.getAccount()
   const totalBalance = await account.getTotalBalance()
   client.disconnect()
-  return totalBalance
+  if (totalBalance > 0) return totalBalance
+  else return 0
 }
 
 export async function sendFundsToChallengeWinners(element) {
