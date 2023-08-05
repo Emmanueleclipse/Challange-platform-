@@ -128,7 +128,7 @@ const EditChallenge = () => {
               mnemonic: dataEscrow.mnemonic,
               identity: dataEscrow.address.address,
               start_date: convertDateToUTCString(values.start_date),
-              end_date: convertDateToUTCString(values.end_date),
+              end_date: convertDateToUTCString(values.end_date, 'end'),
               goal_threshold: `${values.goal_threshold}`,
               goal_increaments: `${values.goal_increaments}`,
               add_bet: `${values.add_bet}`,
@@ -227,7 +227,7 @@ const EditChallenge = () => {
           ...values,
           coordinator: currentUser.username,
           start_date: convertDateToUTCString(values.start_date),
-          end_date: convertDateToUTCString(values.end_date),
+          end_date: convertDateToUTCString(values.end_date, 'end'),
           goal_threshold: `${values.goal_threshold}`,
           goal_increaments: `${values.goal_increaments}`,
           goal_bets: `${values.add_bet}`,
@@ -387,12 +387,12 @@ const EditChallenge = () => {
                       >
                         <Grid item xs={12} sm={3}>
                           <Typography className={styles.label}>
-                            Goal Threshold:
+                            Winning Threshold:
                           </Typography>
                         </Grid>
                         <Grid item xs={12} sm={9}>
                           <TextField
-                            label='Goal Threshold'
+                            label='Winning Threshold'
                             variant='outlined'
                             name='goal_threshold'
                             type='number'

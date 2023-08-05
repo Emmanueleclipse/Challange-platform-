@@ -171,7 +171,7 @@ const SignUp = () => {
               <>
                 <Typography>Your Dash Address is</Typography>
                 <div className={styles.dashAddress}>
-                  "{accountInfo?.address}"
+                  {`"${accountInfo?.address}"`}
                 </div>
                 <TextField
                   className={styles.textInput}

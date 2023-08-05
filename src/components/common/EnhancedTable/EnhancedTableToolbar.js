@@ -62,6 +62,7 @@ const EnhancedTableToolbar = (props) => {
           <Typography
             className={classes.title}
             variant='h6'
+            style={{ fontWeight: '700' }}
             id='tableTitle'
             component='div'
           >
@@ -70,7 +71,7 @@ const EnhancedTableToolbar = (props) => {
           {showFilters && (
             <Box pt={4} p={2}>
               <Grid container spacing={4} alignItems='center'>
-                <Grid item xs={12} sm={8} md={6} lg={4}>
+                {/* <Grid item xs={12} sm={8} md={6} lg={4}>
                   <Box display='flex' alignItems='center'>
                     <Box mr={2}>
                       <Typography className={classes.label}>
@@ -95,9 +96,9 @@ const EnhancedTableToolbar = (props) => {
                       fullWidth
                     />
                   </Box>
-                </Grid>
+                </Grid> */}
 
-                <Grid item xs={12} sm={8} md={6} lg={4}>
+                {/* <Grid item xs={12} sm={8} md={6} lg={4}>
                   <Box display='flex' alignItems='center'>
                     <Box mr={2}>
                       <Typography className={classes.label}>
@@ -117,9 +118,9 @@ const EnhancedTableToolbar = (props) => {
                       <MenuItem value={'distance'}>Distance</MenuItem>
                     </Select>
                   </Box>
-                </Grid>
+                </Grid> */}
 
-                <Grid item xs={12} sm={8} md={6} lg={4}>
+                {/* <Grid item xs={12} sm={8} md={6} lg={4}>
                   <Box display='flex' alignItems='center'>
                     <Box mr={2}>
                       <Typography className={classes.label}>
@@ -143,9 +144,9 @@ const EnhancedTableToolbar = (props) => {
                       }
                     />
                   </Box>
-                </Grid>
+                </Grid> */}
 
-                <Grid item xs={12} sm={8} md={6} lg={4}>
+                {/* <Grid item xs={12} sm={8} md={6} lg={4}>
                   <Box display='flex' alignItems='center'>
                     <Box mr={2}>
                       <Typography className={classes.label}>
@@ -160,7 +161,7 @@ const EnhancedTableToolbar = (props) => {
                       inputProps={{ 'aria-label': 'primary checkbox' }}
                     />
                   </Box>
-                </Grid>
+                </Grid> */}
               </Grid>
             </Box>
           )}

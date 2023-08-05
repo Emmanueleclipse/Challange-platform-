@@ -10,9 +10,13 @@ export const convertFromUTC = (date) => {
   return new Date(Date.UTC(year, month, day))
 }
 
-export const convertDateToUTCString = (date) => {
+export const convertDateToUTCString = (date, type) => {
   const newDate = new Date(date)
-  return `${newDate.getUTCFullYear()}-${
-    newDate.getUTCMonth() + 1
-  }-${newDate.getUTCDate()}`
+
+  // Add +1 day to the date
+  if (type === 'end') newDate.setDate(newDate.getDate() + 1)
+  else if (type === 'minus') newDate.setDate(newDate.getDate() - 1)
+  return `${newDate.getUTCFullYear()}-${(newDate.getUTCMonth() + 1)
+    .toString()
+    .padStart(2, '0')}-${newDate.getUTCDate().toString().padStart(2, '0')}`
 }

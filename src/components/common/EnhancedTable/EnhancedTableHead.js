@@ -46,13 +46,18 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding='normal' align='center'>
+        <TableCell
+          style={{ fontWeight: '700' }}
+          padding='normal'
+          align='center'
+        >
           No
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align='center'
+            style={{ fontWeight: '700' }}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={
               headCell.sortable && orderBy === headCell.id ? order : false

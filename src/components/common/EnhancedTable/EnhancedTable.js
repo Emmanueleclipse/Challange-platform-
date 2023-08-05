@@ -233,7 +233,7 @@ export default function EnhancedTable(props) {
                         {convertDateToUTCString(row.start_date)}
                       </TableCell>
                       <TableCell align='center'>
-                        {convertDateToUTCString(row.end_date)}
+                        {convertDateToUTCString(row.end_date, 'minus')}
                       </TableCell>
                       <TableCell align='center'>{row.coordinator}</TableCell>
                       <TableCell align='center'>
