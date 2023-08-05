@@ -81,7 +81,7 @@ const Profile = () => {
   }, [mutateUpdateUser, user])
 
   function getFunds() {
-    toast.success('Please keep patience while you balance is loading...', {
+    toast.success('Please wait, your transaction is being processed', {
       autoClose: 7000,
     })
     jwtDecode(localStorage.getItem('token')).then((res) => {

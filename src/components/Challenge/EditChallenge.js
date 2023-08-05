@@ -152,7 +152,7 @@ const EditChallenge = () => {
                   decryptMnemonic(pKey, secretKey).then((res) => {
                     if (res)
                       toast.success(
-                        'Please keep patience while your transaction is being processing',
+                        'Please wait, your transaction is being processed',
                         {
                           autoClose: false,
                         }
@@ -160,7 +160,7 @@ const EditChallenge = () => {
                     sendFundsToEscrow(res, values?.add_bet).then((res1) => {
                       if (res1 === 'Charge your account!') {
                         toast.error(
-                          'You do not have enough funds to perform this transaction',
+                          'You do not have enough funds for this transaction. Please send the required amount to your wallet',
                           {
                             autoClose: false,
                           }

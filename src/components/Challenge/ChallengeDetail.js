@@ -194,16 +194,13 @@ export default function ChallengeDetail() {
       const pKey = res?.private_key
       decryptMnemonic(pKey, secretKey).then((res) => {
         if (res)
-          toast.success(
-            'Please keep patience while your transaction is being processing',
-            {
-              autoClose: false,
-            }
-          )
+          toast.success('Please wait, your transaction is being processed', {
+            autoClose: false,
+          })
         sendFundsToEscrow(res, betAmount).then((res1) => {
           if (res1 === 'Charge your account!') {
             toast.error(
-              'You do not have enough funds to perform this transaction',
+              'You do not have enough funds for this transaction. Please send the required amount to your wallet',
               {
                 autoClose: false,
               }
@@ -344,7 +341,7 @@ export default function ChallengeDetail() {
         <PageWrapper display='flex' flexDirection='row'>
           <Box display='flex' alignItems='justify-between' flexDirection='row'>
             <Box display='flex' alignItems='start' flexDirection='column'>
-              <Typography variant='h3'>
+              <Typography Style={{ fontSize: 20 }}>
                 <strong>Steps</strong>
               </Typography>
               <Box mb={3} />
